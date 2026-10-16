@@ -1,0 +1,201 @@
+import os
+from datetime import datetime
+
+def generar_html():
+    # Obtener la fecha y mes actual para el encabezado
+    fecha_actual = datetime.now().strftime("%B %Y").capitalize()
+    
+    # Estructura del HTML con el diseño azul oscuro
+    html_content = f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARI NEWS - INTELIGENCIA MIGRATORIA COLOMBIA - NORUEGA</title>
+    <style>
+        :root {{
+            --bg-color: #0b1329;
+            --card-bg: #112240;
+            --text-primary: #e6f1ff;
+            --text-secondary: #8892b0;
+            --accent-blue: #00bcd4;
+            --border-color: #233554;
+            --danger-color: #ff5252;
+        }}
+        body {{
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+        }}
+        .header {{
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }}
+        .header h1 {{
+            color: var(--text-primary);
+            font-size: 24px;
+            margin: 0 0 5px 0;
+            letter-spacing: 1px;
+        }}
+        .header p {{
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin: 0;
+        }}
+        .grid-container {{
+            display: grid;
+            grid-template-columns: 1fr 1.3fr 1fr;
+            gap: 20px;
+        }}
+        @media (max-width: 900px) {{
+            .grid-container {{
+                grid-template-columns: 1fr;
+            }}
+        }}
+        .card {{
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+        }}
+        .card-title {{
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }}
+        .stat-box {{
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 12px;
+            text-align: center;
+        }}
+        .stat-value {{
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff;
+        }}
+        .stat-label {{
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }}
+        table {{
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }}
+        th, td {{
+            padding: 8px 6px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }}
+        th {{
+            color: var(--text-secondary);
+            font-weight: 600;
+        }}
+        .text-left {{
+            text-align: left;
+        }}
+        .badge-danger {{
+            color: var(--danger-color);
+        }}
+        .list-item {{
+            font-size: 12px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }}
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>ARI NEWS &mdash; INTELIGENCIA MIGRATORIA COLOMBIA - NORUEGA</h1>
+        <p>Monitoreo Oficial, Desglose Municipal, Empleabilidad, Marco Jurídico y Actualidad ({fecha_actual})</p>
+    </div>
+
+    <div class="grid-container">
+        
+        <!-- Columna 1: Indicadores Demográficos -->
+        <div class="card">
+            <div class="card-title">Indicadores Demográficos ({fecha_actual})</div>
+            
+            <div class="stat-box">
+                <div class="stat-value">4,128</div>
+                <div class="stat-label">Población total registrada en Noruega (SSB)</div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-value">56% / 44%</div>
+                <div class="stat-label">Brecha de Género (Mujeres: 2.311 | Hombres: 1.817)</div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-value">68% (2.808)</div>
+                <div class="stat-label">Población en edad activa (20-54 años)</div>
+            </div>
+        </div>
+
+        <!-- Columna 2: Evolución Anual -->
+        <div class="card">
+            <div class="card-title">Evolución Anual vs. Resoluciones UDI</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-left">AÑO</th>
+                        <th>TOTAL SSB</th>
+                        <th>APROB.</th>
+                        <th>RECH.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="text-left">2020</td><td>2.605</td><td>110</td><td class="badge-danger">290</td></tr>
+                    <tr><td class="text-left">2021</td><td>2.638</td><td>160</td><td class="badge-danger">450</td></tr>
+                    <tr><td class="text-left">2022</td><td>2.911</td><td>230</td><td class="badge-danger">580</td></tr>
+                    <tr><td class="text-left">2023</td><td>3.372</td><td>290</td><td class="badge-danger">710</td></tr>
+                    <tr><td class="text-left">2024</td><td>3.699</td><td>340</td><td class="badge-danger">850</td></tr>
+                    <tr><td class="text-left">2025</td><td>4.044</td><td>390</td><td class="badge-danger">920</td></tr>
+                    <tr><td class="text-left">2026 (Oct)</td><td>4.128</td><td>410</td><td class="badge-danger">890</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Columna 3: Concentración por Municipio -->
+        <div class="card">
+            <div class="card-title">Concentración por Municipio (Kommune)</div>
+            <div class="list-item">Oslo (Kommune Oslo)</div>
+            <div class="list-item">Bergen (Kommune Vestland)</div>
+            <div class="list-item">Stavanger (Kommune Rogaland)</div>
+            <div class="list-item">Trondheim (Kommune Trøndelag)</div>
+            <div class="list-item">Kristiansand (Kommune Agder)</div>
+            <div class="list-item">Sandnes (Kommune Rogaland)</div>
+            <div class="list-item">Drammen (Kommune Buskerud)</div>
+            <div class="list-item">Bærum (Kommune Akershus)</div>
+            <div class="list-item">Lillestrøm (Kommune Akershus)</div>
+            <div class="list-item">Asker (Kommune Akershus)</div>
+            <div class="list-item">Tromsø (Kommune Troms)</div>
+            <div class="list-item">Skien (Kommune Telemark)</div>
+        </div>
+
+    </div>
+
+</body>
+</html>"""
+
+    # Guardar el contenido dentro de index.html
+    with open("index.html", "w", encoding="utf-8") as f:
+        f.write(html_content)
+    
+    print("¡index.html generado exitosamente!")
+
+if __name__ == "__main__":
+    generar_html()
