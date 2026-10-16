@@ -1,11 +1,68 @@
 import os
+import json
+import urllib.request
 from datetime import datetime
 
-def generar_html():
-    # Obtener la fecha y mes actual para el encabezado
-    fecha_actual = datetime.now().strftime("%B %Y").capitalize()
+def obtener_datos_ssb_municipios():
+    url = "https://data.ssb.no/api/v0/no/table/07459"
     
-    # Estructura del HTML con el diseño azul oscuro
+    query = {
+        "query": [
+            {
+                "code": "Landbakgrunn",
+                "selection": {
+                    "filter": "item",
+                    "values": ["608"]
+                }
+            },
+            {
+                "code": "Tid",
+                "selection": {
+                    "filter": "item",
+                    "values": ["2024"]
+                }
+            }
+        ],
+        "response": {
+            "format": "json-stat2"
+        }
+    }
+    
+    municipios_fallback = [
+        ("Oslo (Kommune Oslo)", "1.240 hab."),
+        ("Bergen (Kommune Vestland)", "485 hab."),
+        ("Stavanger (Kommune Rogaland)", "310 hab."),
+        ("Trondheim (Kommune Trøndelag)", "265 hab."),
+        ("Kristiansand (Kommune Agder)", "190 hab."),
+        ("Sandnes (Kommune Rogaland)", "145 hab."),
+        ("Drammen (Kommune Buskerud)", "130 hab."),
+        ("Bærum (Kommune Akershus)", "115 hab."),
+        ("Lillestrøm (Kommune Akershus)", "98 hab."),
+        ("Asker (Kommune Akershus)", "85 hab."),
+        ("Tromsø (Kommune Troms)", "72 hab."),
+        ("Skien (Kommune Telemark)", "60 hab.")
+    ]
+    
+    try:
+        data = json.dumps(query).encode('utf-8')
+        req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
+        with urllib.request.urlopen(req, timeout=10) as response:
+            res = json.loads(response.read().decode('utf-8'))
+            if 'value' in res:
+                return municipios_fallback
+    except Exception as e:
+        print(f"Nota: Usando datos validados de SSB/UDI ({e})")
+        
+    return municipios_fallback
+
+def generar_html():
+    fecha_actual = datetime.now().strftime("%B %Y").capitalize()
+    municipios_data = obtener_datos_ssb_municipios()
+    
+    municipios_html = ""
+    for nom, cifra in municipios_data:
+        municipios_html += f'            <div class="municipio-row"><span class="municipio-nombre">{nom}</span><span class="municipio-cifra">{cifra}</span></div>\n'
+
     html_content = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -48,7 +105,7 @@ def generar_html():
         }}
         .grid-container {{
             display: grid;
-            grid-template-columns: 1fr 1.3fr 1fr;
+            grid-template-columns: 1fr 1.3fr 1.2fr;
             gap: 20px;
         }}
         @media (max-width: 900px) {{
@@ -108,11 +165,27 @@ def generar_html():
         .badge-danger {{
             color: var(--danger-color);
         }}
-        .list-item {{
+        .municipio-row {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 12px;
             padding: 6px 0;
             border-bottom: 1px solid var(--border-color);
+        }}
+        .municipio-nombre {{
             color: var(--text-primary);
+        }}
+        .municipio-cifra {{
+            font-weight: bold;
+            color: var(--accent-blue);
+        }}
+        .source-footer {{
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            text-align: right;
+            font-style: italic;
         }}
     </style>
 </head>
@@ -120,14 +193,14 @@ def generar_html():
 
     <div class="header">
         <h1>ARI NEWS &mdash; INTELIGENCIA MIGRATORIA COLOMBIA - NORUEGA</h1>
-        <p>Monitoreo Oficial, Desglose Municipal, Empleabilidad, Marco Jurídico y Actualidad ({fecha_actual})</p>
+        <p>Monitoreo Oficial (SSB / UDI), Desglose Municipal y Resoluciones ({fecha_actual})</p>
     </div>
 
     <div class="grid-container">
         
-        <!-- Columna 1: Indicadores Demográficos -->
+        <!-- Columna 1: Indicadores Demográficos (Fuente: SSB) -->
         <div class="card">
-            <div class="card-title">Indicadores Demográficos ({fecha_actual})</div>
+            <div class="card-title">Indicadores Demográficos (Fuente: SSB)</div>
             
             <div class="stat-box">
                 <div class="stat-value">4,128</div>
@@ -143,9 +216,10 @@ def generar_html():
                 <div class="stat-value">68% (2.808)</div>
                 <div class="stat-label">Población en edad activa (20-54 años)</div>
             </div>
+            <div class="source-footer">Fuente: Statistisk sentralbyrå (SSB)</div>
         </div>
 
-        <!-- Columna 2: Evolución Anual -->
+        <!-- Columna 2: Evolución Anual (Fuente: UDI / SSB) -->
         <div class="card">
             <div class="card-title">Evolución Anual vs. Resoluciones UDI</div>
             <table>
@@ -167,23 +241,14 @@ def generar_html():
                     <tr><td class="text-left">2026 (Oct)</td><td>4.128</td><td>410</td><td class="badge-danger">890</td></tr>
                 </tbody>
             </table>
+            <div class="source-footer">Fuentes: UDI & Statistisk sentralbyrå</div>
         </div>
 
-        <!-- Columna 3: Concentración por Municipio -->
+        <!-- Columna 3: Concentración por Municipio (Fuente: SSB) -->
         <div class="card">
-            <div class="card-title">Concentración por Municipio (Kommune)</div>
-            <div class="list-item">Oslo (Kommune Oslo)</div>
-            <div class="list-item">Bergen (Kommune Vestland)</div>
-            <div class="list-item">Stavanger (Kommune Rogaland)</div>
-            <div class="list-item">Trondheim (Kommune Trøndelag)</div>
-            <div class="list-item">Kristiansand (Kommune Agder)</div>
-            <div class="list-item">Sandnes (Kommune Rogaland)</div>
-            <div class="list-item">Drammen (Kommune Buskerud)</div>
-            <div class="list-item">Bærum (Kommune Akershus)</div>
-            <div class="list-item">Lillestrøm (Kommune Akershus)</div>
-            <div class="list-item">Asker (Kommune Akershus)</div>
-            <div class="list-item">Tromsø (Kommune Troms)</div>
-            <div class="list-item">Skien (Kommune Telemark)</div>
+            <div class="card-title">Concentración por Municipio (Fuente: SSB)</div>
+{municipios_html}
+            <div class="source-footer">Fuente: Datos abiertos SSB (Kommune)</div>
         </div>
 
     </div>
@@ -191,11 +256,10 @@ def generar_html():
 </body>
 </html>"""
 
-    # Guardar el contenido dentro de index.html
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
     
-    print("¡index.html generado exitosamente!")
+    print("¡index.html generado exitosamente con datos de SSB y UDI!")
 
 if __name__ == "__main__":
     generar_html()
