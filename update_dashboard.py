@@ -119,6 +119,7 @@ def generar_html():
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 15px;
+            margin-bottom: 20px;
         }}
         .card-title {{
             font-size: 14px;
@@ -183,7 +184,7 @@ def generar_html():
         }}
         .news-item {{
             border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
+            padding: 12px 0;
         }}
         .news-item:last-child {{
             border-bottom: none;
@@ -198,7 +199,7 @@ def generar_html():
             font-size: 13px;
             font-weight: bold;
             color: var(--text-primary);
-            margin: 3px 0;
+            margin: 4px 0;
         }}
         .news-desc {{
             font-size: 11px;
@@ -351,7 +352,7 @@ def generar_html():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
     
-    print("¡index.html generado exitosamente con toda la información completa!")
+    print("¡index.html generado exitosamente con la información completa!")
 
 if __name__ == "__main__":
     generar_html()
