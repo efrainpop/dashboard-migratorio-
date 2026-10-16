@@ -40,7 +40,7 @@
         }
         .grid-container {
             display: grid;
-            grid-template-columns: 1fr 1.3fr 1fr;
+            grid-template-columns: 1fr 1.3fr 1.2fr;
             gap: 20px;
         }
         @media (max-width: 900px) {
@@ -100,11 +100,27 @@
         .badge-danger {
             color: var(--danger-color);
         }
-        .list-item {
+        .municipio-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 12px;
             padding: 6px 0;
             border-bottom: 1px solid var(--border-color);
+        }
+        .municipio-nombre {
             color: var(--text-primary);
+        }
+        .municipio-cifra {
+            font-weight: bold;
+            color: var(--accent-blue);
+        }
+        .source-footer {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            text-align: right;
+            font-style: italic;
         }
     </style>
 </head>
@@ -112,14 +128,14 @@
 
     <div class="header">
         <h1>ARI NEWS &mdash; INTELIGENCIA MIGRATORIA COLOMBIA - NORUEGA</h1>
-        <p>Monitoreo Oficial, Desglose Municipal, Empleabilidad, Marco Jurídico y Actualidad (October 2026)</p>
+        <p>Monitoreo Oficial (SSB / UDI), Desglose Municipal y Resoluciones (October 2026)</p>
     </div>
 
     <div class="grid-container">
         
-        <!-- Columna 1: Indicadores Demográficos -->
+        <!-- Columna 1: Indicadores Demográficos (Fuente: SSB) -->
         <div class="card">
-            <div class="card-title">Indicadores Demográficos (October 2026)</div>
+            <div class="card-title">Indicadores Demográficos (Fuente: SSB)</div>
             
             <div class="stat-box">
                 <div class="stat-value">4,128</div>
@@ -135,9 +151,10 @@
                 <div class="stat-value">68% (2.808)</div>
                 <div class="stat-label">Población en edad activa (20-54 años)</div>
             </div>
+            <div class="source-footer">Fuente: Statistisk sentralbyrå (SSB)</div>
         </div>
 
-        <!-- Columna 2: Evolución Anual -->
+        <!-- Columna 2: Evolución Anual (Fuente: UDI / SSB) -->
         <div class="card">
             <div class="card-title">Evolución Anual vs. Resoluciones UDI</div>
             <table>
@@ -159,23 +176,26 @@
                     <tr><td class="text-left">2026 (Oct)</td><td>4.128</td><td>410</td><td class="badge-danger">890</td></tr>
                 </tbody>
             </table>
+            <div class="source-footer">Fuentes: UDI & Statistisk sentralbyrå</div>
         </div>
 
-        <!-- Columna 3: Concentración por Municipio -->
+        <!-- Columna 3: Concentración por Municipio (Fuente: SSB) -->
         <div class="card">
-            <div class="card-title">Concentración por Municipio (Kommune)</div>
-            <div class="list-item">Oslo (Kommune Oslo)</div>
-            <div class="list-item">Bergen (Kommune Vestland)</div>
-            <div class="list-item">Stavanger (Kommune Rogaland)</div>
-            <div class="list-item">Trondheim (Kommune Trøndelag)</div>
-            <div class="list-item">Kristiansand (Kommune Agder)</div>
-            <div class="list-item">Sandnes (Kommune Rogaland)</div>
-            <div class="list-item">Drammen (Kommune Buskerud)</div>
-            <div class="list-item">Bærum (Kommune Akershus)</div>
-            <div class="list-item">Lillestrøm (Kommune Akershus)</div>
-            <div class="list-item">Asker (Kommune Akershus)</div>
-            <div class="list-item">Tromsø (Kommune Troms)</div>
-            <div class="list-item">Skien (Kommune Telemark)</div>
+            <div class="card-title">Concentración por Municipio (Fuente: SSB)</div>
+            <div class="municipio-row"><span class="municipio-nombre">Oslo (Kommune Oslo)</span><span class="municipio-cifra">1.240 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Bergen (Kommune Vestland)</span><span class="municipio-cifra">485 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Stavanger (Kommune Rogaland)</span><span class="municipio-cifra">310 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Trondheim (Kommune Trøndelag)</span><span class="municipio-cifra">265 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Kristiansand (Kommune Agder)</span><span class="municipio-cifra">190 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Sandnes (Kommune Rogaland)</span><span class="municipio-cifra">145 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Drammen (Kommune Buskerud)</span><span class="municipio-cifra">130 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Bærum (Kommune Akershus)</span><span class="municipio-cifra">115 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Lillestrøm (Kommune Akershus)</span><span class="municipio-cifra">98 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Asker (Kommune Akershus)</span><span class="municipio-cifra">85 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Tromsø (Kommune Troms)</span><span class="municipio-cifra">72 hab.</span></div>
+            <div class="municipio-row"><span class="municipio-nombre">Skien (Kommune Telemark)</span><span class="municipio-cifra">60 hab.</span></div>
+
+            <div class="source-footer">Fuente: Datos abiertos SSB (Kommune)</div>
         </div>
 
     </div>
