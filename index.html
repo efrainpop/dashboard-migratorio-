@@ -2,165 +2,359 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>ARI NEWS - Panel de Inteligencia Migratoria Colombia-Noruega</title>
+    <title>ARI NEWS - Panel de Inteligencia Migratoria Colombia-Noruega (Oct 2026)</title>
     <style>
+        :root {
+            --canvas-bg: #090d16;
+            --grid-dot: rgba(56, 189, 248, 0.12);
+            --card-bg: #111827;
+            --card-border: #1e293b;
+            --card-border-glow: #0284c7;
+            --accent: #38bdf8;
+            --accent-dim: rgba(56, 189, 248, 0.1);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --success: #34d399;
+            --danger: #f87171;
+        }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            color: #222;
-            line-height: 1.4;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--canvas-bg);
+            color: var(--text-main);
             margin: 0;
-            padding: 20px;
-            background-color: #f4f6f9;
-        }
-        .dashboard-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #fff;
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+            background-size: 24px 24px;
+            min-height: 100vh;
         }
-        .header {
-            border-bottom: 3px solid #005580;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+
+        header {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.9), rgba(15, 23, 42, 0.9));
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+            color: var(--accent);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 13.5px;
+            margin-top: 8px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+        }
+
+        .card:hover {
+            border-color: var(--card-border-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px -10px rgba(2, 132, 199, 0.3);
+        }
+
+        .card h2 {
+            font-size: 15px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 12px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 12.5px;
         }
-        .header h1 {
-            color: #005580;
-            font-size: 24px;
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        li span:last-child {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 12px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .stat-box h3 {
             margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 24px;
+            color: var(--accent);
+            font-weight: 700;
         }
-        .header .meta {
-            font-size: 12px;
-            color: #666;
-            text-align: right;
+
+        .stat-box p {
+            margin: 5px 0 0 0;
+            color: var(--text-muted);
+            font-size: 11.5px;
         }
-        h2 {
-            color: #333;
-            font-size: 18px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-            margin-top: 25px;
-        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            margin-bottom: 25px;
+            font-size: 12.5px;
+            margin-top: 5px;
         }
+
         th, td {
-            border: 1px solid #d1d5db;
-            padding: 10px 12px;
+            padding: 8px 9px;
             text-align: left;
-            font-size: 13px;
+            border-bottom: 1px solid var(--card-border);
         }
+
         th {
-            background-color: #005580;
-            color: #fff;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 11.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-success {
+            color: var(--success);
             font-weight: 600;
         }
-        tr:nth-child(even) {
-            background-color: #f9fafb;
+
+        .badge-danger {
+            color: var(--danger);
+            font-weight: 600;
         }
-        .alert-box {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 12px 15px;
-            margin: 20px 0;
-            font-size: 13px;
-            color: #856404;
+
+        .info-text {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0 0 12px 0;
         }
-        .footer {
-            margin-top: 30px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
+        .info-text strong {
+            color: var(--text-main);
+        }
+
+        .news-item {
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .news-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .news-source {
             font-size: 11px;
-            color: #777;
-            text-align: center;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .news-title {
+            font-size: 13px;
+            color: var(--text-main);
+            font-weight: 600;
+            margin: 3px 0;
+        }
+        .news-summary {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Tarjeta de noticias abarca dos columnas en pantallas grandes si se desea */
+        .card-wide {
+            grid-column: span 2;
+        }
+        @media (max-width: 900px) {
+            .card-wide {
+                grid-column: span 1;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="dashboard-container">
-    <div class="header">
-        <h1>ARI NEWS &bull; Panel de Inteligencia</h1>
-        <div class="meta">
-            <strong>Monitor Migratorio y Jurídico Colombia-Noruega</strong><br>
-            Edición: Octubre 2026 | Nodo Seguro de Inteligencia
+    <header>
+        <h1>ARI NEWS — INTELIGENCIA MIGRATORIA COLOMBIA - NORUEGA</h1>
+        <p>Monitoreo Oficial, Desglose Municipal, Empleabilidad, Marco Jurídico y Actualidad (Octubre 2026)</p>
+    </header>
+
+    <div class="grid-container">
+        <!-- 1. Indicadores Globales y Demografía -->
+        <div class="card">
+            <h2>Indicadores Demográficos (Oct 2026)</h2>
+            <div class="stat-box">
+                <h3>4,128</h3>
+                <p>Población total registrada en Noruega (SSB)</p>
+            </div>
+            <div class="stat-box">
+                <h3>56% / 44%</h3>
+                <p>Brecha de Género (Mujeres: 2.311 | Hombres: 1.817)</p>
+            </div>
+            <div class="stat-box">
+                <h3>68% (2.808)</h3>
+                <p>Población en edad activa (20-54 años)</p>
+            </div>
+        </div>
+
+        <!-- 2. Evolución Histórica / UDI -->
+        <div class="card">
+            <h2>Evolución Anual vs. Resoluciones UDI</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Año</th>
+                        <th>Total SSB</th>
+                        <th>Aprob.</th>
+                        <th>Rech.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>2020</td><td>2.605</td><td class="badge-success">110</td><td class="badge-danger">290</td></tr>
+                    <tr><td>2021</td><td>2.638</td><td class="badge-success">160</td><td class="badge-danger">450</td></tr>
+                    <tr><td>2022</td><td>2.911</td><td class="badge-success">230</td><td class="badge-danger">580</td></tr>
+                    <tr><td>2023</td><td>3.372</td><td class="badge-success">290</td><td class="badge-danger">710</td></tr>
+                    <tr><td>2024</td><td>3.699</td><td class="badge-success">340</td><td class="badge-danger">850</td></tr>
+                    <tr><td>2025</td><td>4.044</td><td class="badge-success">390</td><td class="badge-danger">920</td></tr>
+                    <tr><td>2026 (Oct)</td><td>4.128</td><td class="badge-success">410</td><td class="badge-danger">890</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. Municipios Clave Completos -->
+        <div class="card">
+            <h2>Concentración por Municipio (Kommune)</h2>
+            <ul>
+                <li><span>Oslo (Kommune Oslo)</span><span>1.450</span></li>
+                <li><span>Bergen (Kommune Vestland)</span><span>795</span></li>
+                <li><span>Stavanger (Kommune Rogaland)</span><span>460</span></li>
+                <li><span>Trondheim (Kommune Trøndelag)</span><span>315</span></li>
+                <li><span>Kristiansand (Kommune Agder)</span><span>290</span></li>
+                <li><span>Sandnes (Kommune Rogaland)</span><span>210</span></li>
+                <li><span>Drammen (Kommune Buskerud)</span><span>195</span></li>
+                <li><span>Bærum (Kommune Akershus)</span><span>175</span></li>
+                <li><span>Lillestrøm (Kommune Akershus)</span><span>155</span></li>
+                <li><span>Asker (Kommune Akershus)</span><span>105</span></li>
+                <li><span>Tromsø (Kommune Troms)</span><span>90</span></li>
+                <li><span>Skien (Kommune Telemark)</span><span>80</span></li>
+            </ul>
+        </div>
+
+        <!-- 4. Tipología UDI -->
+        <div class="card">
+            <h2>Tipología de Permisos de Residencia</h2>
+            <ul>
+                <li><span>Reagrupación Familiar</span><span>42% (1.734)</span></li>
+                <li><span>Mercado Laboral (Arbeid)</span><span>28% (1.156)</span></li>
+                <li><span>Estudios Superiores (Studier)</span><span>18% (743)</span></li>
+                <li><span>Protección / Asilo</span><span>12% (495)</span></li>
+            </ul>
+        </div>
+
+        <!-- 5. Métricas Socioeconómicas -->
+        <div class="card">
+            <h2>Métricas Socioeconómicas y Empleo</h2>
+            <p class="info-text"><strong>Inserción Laboral:</strong> Alta tasa de empleo y estabilidad en sectores de servicios, construcción, salud y asistencia social.</p>
+            <p class="info-text"><strong>Homologación Académica:</strong> Convalidación continua de títulos profesionales bajo los lineamientos oficiales del HK-dir.</p>
+        </div>
+
+        <!-- 6. Marco Jurídico -->
+        <div class="card">
+            <h2>Marco Jurídico (Utlendingsloven)</h2>
+            <p class="info-text">Conforme a la Ley de Extranjería de Noruega (<strong>Utlendingsloven</strong>), los permisos de residencia están condicionados al cumplimiento de baremos económicos y requisitos de integración.</p>
+            <p class="info-text"><strong>Recursos:</strong> Las decisiones adversas (Avslag) cuentan con instancias de apelación formal ante la UNE.</p>
+        </div>
+
+        <!-- 7. Últimas 5 Noticias Institucionales (Ocupa ancho doble) -->
+        <div class="card card-wide">
+            <h2>Últimas 5 Noticias y Comunicados Institucionales (SSB & UDI)</h2>
+            
+            <div class="news-item">
+                <div class="news-source">Statistisk sentralbyrå (SSB) — Marzo 2026</div>
+                <div class="news-title">SSB ajusta proyecciones y prevé estabilidad en tipos de interés</div>
+                <p class="news-summary">En su último informe de konjunkturtendenser, la SSB analiza el impacto de la inflación importada y los costos energéticos globales en la economía noruega.</p>
+            </div>
+
+            <div class="news-item">
+                <div class="news-source">Utlendingsdirektoratet (UDI) — Tildelingsbrev 2026</div>
+                <div class="news-title">Nuevas directrices de saksflyt y flujos de asilo</div>
+                <p class="news-summary">La UDI establece prioridades estrictas en la tramitación de expedientes y la coordinación operativa con los entes de la Convención de Dublín y Schengen.</p>
+            </div>
+
+            <div class="news-item">
+                <div class="news-source">Statistisk sentralbyrå (SSB) — Septiembre 2026</div>
+                <div class="news-title">Variación en precios de consumo y canasta básica alimentaria</div>
+                <p class="news-summary">Informes de índices de precios al consumidor detallan fluctuaciones estacionales en productos de consumo masivo que impactan directamente los presupuestos familiares.</p>
+            </div>
+
+            <div class="news-item">
+                <div class="news-source">Utlendingsdirektoratet (UDI) — Actualización 2026</div>
+                <div class="news-title">Evaluación de escenarios de llegada y cuotas de protección</div>
+                <p class="news-summary">Seguimiento periódico a los cupos de evacuación médica y esquemas de recepción para personas desplazadas bajo directrices ministeriales.</p>
+            </div>
+
+            <div class="news-item">
+                <div class="news-source">Statistisk sentralbyrå (SSB) — Octubre 2026</div>
+                <div class="news-title">Dinámica demográfica municipal y concentración urbana</div>
+                <p class="news-summary">Nuevos registros demográficos confirman el patrón de asentamiento de colectivos latinoamericanos con alta incidencia en los municipios de Oslo, Bergen y Stavanger.</p>
+            </div>
         </div>
     </div>
-
-    <p>Bienvenido al <strong>Panel de Inteligencia ARI NEWS</strong>. Este panel de monitoreo de alta seguridad proporciona una visión integrada de las salvaguardas institucionales transfronterizas, los procedimientos de protección internacional entre Colombia y el Reino de Noruega, y los marcos de responsabilidad estructural del Estado.</p>
-
-    <h2>1. Resumen Ejecutivo y Estado Geopolítico</h2>
-    <table>
-        <tr>
-            <th>Indicador / Métrica</th>
-            <th>Estado Actual (Octubre 2026)</th>
-            <th>Evaluación Operativa</th>
-        </tr>
-        <tr>
-            <td><strong>Canal Jurídico Bilateral</strong></td>
-            <td>Colombia (Popayán / Bogotá D.C.) &harr; Reino de Noruega (Nærbø)</td>
-            <td>Salvaguardas constitucionales transfronterizas activas y monitoreo de tutela.</td>
-        </tr>
-        <tr>
-            <td><strong>Marco de Protección</strong></td>
-            <td>Derecho Internacional Humanitario y Protección de Refugiados</td>
-            <td>Evaluación continua bajo estándares europeos de derechos humanos y directrices del ACNUR.</td>
-        </tr>
-        <tr>
-            <td><strong>Respuesta Institucional</strong></td>
-            <td>Coordinación Multisectorial (UNP, MinInterior, Cancillería, Migración Colombia)</td>
-            <td>Vacíos de coordinación estructural documentados que requieren rigurosa supervisión judicial.</td>
-        </tr>
-    </table>
-
-    <div class="alert-box">
-        <strong>AVISO DE SEGURIDAD:</strong> Todos los registros de inteligencia, notificaciones judiciales y metadatos procesales están encriptados y archivados bajo estrictas reglas de confidencialidad profesional. Acceso restringido a operadores jurídicos y administrativos autorizados.
-    </div>
-
-    <h2>2. Seguimiento de Procesos y Radicados Clave</h2>
-    <table>
-        <tr>
-            <th>Proceso / Caso Radicado</th>
-            <th>Entidad / Autoridad Destino</th>
-            <th>Fase Procesal Actual</th>
-        </tr>
-        <tr>
-            <td>Acción de Tutela Rad. 11001-31-10-803-2026-00095-00</td>
-            <td>Juzgado 803 Transitorio de Familia de Bogotá D.C.</td>
-            <td>Revisión judicial activa sobre falla estructural del Estado y medidas de protección.</td>
-        </tr>
-        <tr>
-            <td>Proceso Rad. 2026-00506-00 (Acta de Reparto)</td>
-            <td>Juzgado 03 Civil Municipal &bull; Juzgados Civiles del Circuito de Popayán</td>
-            <td>Impugnación y trámite de segunda instancia activo.</td>
-        </tr>
-        <tr>
-            <td>Noticia Criminal NC 1900160006012025000054</td>
-            <td>Fiscalía General de la Nación (SAU Popayán)</td>
-            <td>Incorporación probatoria activa sobre amenazas de seguridad y protección a Misión Médica.</td>
-        </tr>
-    </table>
-
-    <h2>3. Recomendaciones Estratégicas de Actuación</h2>
-    <ul>
-        <li><strong>Monitoreo Continuo:</strong> Mantener un seguimiento riguroso de los plazos institucionales y respuestas formales de las entidades colombianas.</li>
-        <li><strong>Consolidación Probatoria:</strong> Garantizar que todos los registros de comunicación transfronteriza, notificaciones consulares y credenciales de Misión Médica estén encriptados y organizados.</li>
-        <li><strong>Cumplimiento Legal:</strong> Adherirse estrictamente a los estándares constitucionales y de Derecho Internacional Humanitario en todas las peticiones elevadas.</li>
-    </ul>
-
-    <div class="footer">
-        Panel de Inteligencia ARI NEWS &bull; Preparado para Efraín Adriano Chaguendo Magín &bull; Informe Operativo Confidencial
-    </div>
-</div>
 
 </body>
 </html>
